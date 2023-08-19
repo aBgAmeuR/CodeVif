@@ -7,6 +7,9 @@ const roboto_Mono = Roboto_Mono({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'CodeVif',
   description: 'App created by aBgAmeuR',
+  icons: {
+    icon: '/logo.svg',
+  },
 }
 
 export default function RootLayout({
@@ -16,7 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={roboto_Mono.className}>{children}</body>
+      <body className={`${roboto_Mono.className} flex min-h-screen flex-col items-center justify-between p-8 bg-background`}>{children}</body>
     </html>
   )
 }
+
