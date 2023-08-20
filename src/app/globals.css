@@ -6,5 +6,19 @@ footer a:hover {
   color: #f5f3ed;
 }
 footer a:hover svg {
-  filter: invert(100%) sepia(0%) saturate(3899%) hue-rotate(3deg) brightness(137%) contrast(90%); /* #f5f3ed */
+  filter: invert(100%) sepia(0%) saturate(3899%) hue-rotate(3deg)
+    brightness(137%) contrast(90%); /* #f5f3ed */
+}
+#text line {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+#text .word {
+  display: flex;
+  flex-direction: row;
+}
+#text .letter {
+  display: flex;
+  flex-direction: row;
 }
