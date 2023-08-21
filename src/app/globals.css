@@ -19,6 +19,6 @@ footer a:hover svg {
   flex-direction: row;
 }
 #text .letter {
-  display: flex;
-  flex-direction: row;
+  display: inline;
 }
+
