@@ -21,4 +21,10 @@ footer a:hover svg {
 #text .letter {
   display: inline;
 }
+#text .letter.incorrect {
+  color: #af5f5f;
+}
+#text .letter.correct {
+  color: #f5f3ed;
+}
 
