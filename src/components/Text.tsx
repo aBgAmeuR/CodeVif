@@ -14,8 +14,6 @@ export default class Text {
   }
 
   public keyDownHandler(key: string): void {
-    // console.log(key, this.lineIndex, this.wordIndex, this.letterIndex);
-
     if (key === "Enter") {
       if (this.wordIndex < this.text[this.lineIndex].split(" ").length - 1) return;
       this.lineIndex = Math.min(this.lineIndex + 1, this.text.length - 1);
@@ -39,8 +37,6 @@ export default class Text {
       this.letterIndex = Math.min(this.letterIndex + 1, this.text[this.lineIndex].split(" ")[this.wordIndex].length);
     }
     this.updateCursor();
-    console.log("next key : ", this.getCurrentLetter());
-    
   }
 
   private getCurrentLetter(): string {
@@ -61,12 +57,12 @@ export default class Text {
     }
   }
   
-  private addLetterToWord(key: string): void {
-    const activeWord = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1})`);    
-    if (activeWord) {
-      activeWord.innerHTML += `<div class="letter incorrect extra">${key}</div>`;
-    }
-  }
+  // private addLetterToWord(key: string): void {
+  //   const activeWord = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1})`);    
+  //   if (activeWord) {
+  //     activeWord.innerHTML += `<div class="letter incorrect extra">${key}</div>`;
+  //   }
+  // }
 
   private getTabCount(line: number): number {
     return (this.text[line].match(/\t/g) ?? []).length;
@@ -76,10 +72,24 @@ export default class Text {
     const cursor = document.getElementById("cursor");
     if (cursor) {
       const lineTabulation = this.getTabCount(this.lineIndex) * 48 - 1;
-      const translateX = lineTabulation + this.wordIndex * 16 + this.letterIndex * 14.41;
+      const translateX = lineTabulation + this.getDistanceFromLine() + this.letterIndex * 14.41;
       const translateY = this.lineIndex * 24 + this.lineIndex * 8;
       cursor.style.transform = `translate(${translateX}px, ${translateY}px)`;
     }
+  }
+
+  private getDistanceFromLine(): number {
+    const line = document.querySelector(`line:nth-child(${this.lineIndex + 1})`);
+    const word = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1})`);
+    if (line && word) {
+      const lineRect = line.getBoundingClientRect();
+      const wordRect = word.getBoundingClientRect();
+      if (this.wordIndex === 0)
+        return wordRect.left - lineRect.left;
+      else
+        return wordRect.left - lineRect.left - this.getTabCount(this.lineIndex) * 48;
+    }
+    return 0;
   }
   
   Render(): ReactNode {
