@@ -11,6 +11,7 @@ export default function Home() {
   
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
+      if (["Shift", "Control", "Alt", "AltGraph", "Tab"].includes(e.key)) return;
       text.keyDownHandler(e.key);
     });
     return () => {
@@ -24,6 +25,7 @@ export default function Home() {
     <>
       <Header />
       <main>
+        <div id="cursor"></div>
         <div
           id="text"
           className="text-primary text-lg flex flex-col gap-2"

@@ -12,7 +12,7 @@ footer a:hover svg {
 #text line {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 14.41px;
 }
 #text .word {
   display: flex;
@@ -27,4 +27,27 @@ footer a:hover svg {
 #text .letter.correct {
   color: #f5f3ed;
 }
+#text .letter.extra {
+  color: #4d2113;
+}
+#cursor {
+  position: absolute;
+  z-index: 2;
+  height: 24px;
+  width: 2px;
+  background-color: #e3e3e3;
+  animation: blink 1s infinite;
+  transition: .1s;
+}
 
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

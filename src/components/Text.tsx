@@ -14,10 +14,9 @@ export default class Text {
   }
 
   public keyDownHandler(key: string): void {
-    console.log(key, this.lineIndex, this.wordIndex, this.letterIndex);
-  
-    if (key === "Shift") return;
-    else if (key === "Enter") {
+    // console.log(key, this.lineIndex, this.wordIndex, this.letterIndex);
+
+    if (key === "Enter") {
       if (this.wordIndex < this.text[this.lineIndex].split(" ").length - 1) return;
       this.lineIndex = Math.min(this.lineIndex + 1, this.text.length - 1);
       this.wordIndex = 0;
@@ -33,41 +32,56 @@ export default class Text {
         this.addIncorrectClass();
       }
       
-      if (this.letterIndex === this.text[this.lineIndex].split(" ")[this.wordIndex].length - 1) {
-        this.addLetterToWord(); // Add the letter to the word
-      }
+      // if (this.letterIndex === this.text[this.lineIndex].split(" ")[this.wordIndex].length - 1) {
+      //   this.addLetterToWord(key);
+      // }
       
-      this.letterIndex = Math.min(this.letterIndex + 1, this.text[this.lineIndex].split(" ")[this.wordIndex].length - 1);
+      this.letterIndex = Math.min(this.letterIndex + 1, this.text[this.lineIndex].split(" ")[this.wordIndex].length);
     }
+    this.updateCursor();
+    console.log("next key : ", this.getCurrentLetter());
+    
   }
 
   private getCurrentLetter(): string {
-    return this.text[this.lineIndex].split(" ")[this.wordIndex][this.letterIndex];
+    return this.text[this.lineIndex].split(" ")[this.wordIndex].trim()[this.letterIndex];
   }
   
   private addCorrectClass(): void {
-    console.log("correct");
     const activeLetter = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1}) .letter:nth-child(${this.letterIndex + 1})`);
-    console.log(activeLetter);
     if (activeLetter) {
-      activeLetter.classList.add("correct"); // Replace "correct-letter" with your actual CSS class for correct letters
+      activeLetter.classList.add("correct");
     }
   }
   
   private addIncorrectClass(): void {
-    console.log("incorrect");
     const activeLetter = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1}) .letter:nth-child(${this.letterIndex + 1})`);
-    console.log(activeLetter);
-    
     if (activeLetter) {
-      activeLetter.classList.add("incorrect"); // Replace "incorrect-letter" with your actual CSS class for incorrect letters
+      activeLetter.classList.add("incorrect");
     }
   }
   
-  private addLetterToWord(): void {
-    // TODO: Add the letter to the current word (e.g., apply a CSS class)
+  private addLetterToWord(key: string): void {
+    const activeWord = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1})`);    
+    if (activeWord) {
+      activeWord.innerHTML += `<div class="letter incorrect extra">${key}</div>`;
+    }
   }
 
+  private getTabCount(line: number): number {
+    return (this.text[line].match(/\t/g) ?? []).length;
+  }
+
+  private updateCursor(): void {
+    const cursor = document.getElementById("cursor");
+    if (cursor) {
+      const lineTabulation = this.getTabCount(this.lineIndex) * 48 - 1;
+      const translateX = lineTabulation + this.wordIndex * 16 + this.letterIndex * 14.41;
+      const translateY = this.lineIndex * 24 + this.lineIndex * 8;
+      cursor.style.transform = `translate(${translateX}px, ${translateY}px)`;
+    }
+  }
+  
   Render(): ReactNode {
     const re = new RegExp("\t", "g");
 
