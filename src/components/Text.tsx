@@ -5,7 +5,7 @@ export default class Text {
   private lineIndex: number;
   private wordIndex: number;
   private letterIndex: number;
-
+  
   constructor(text: string) {
     this.text = text.split("\n");
     this.lineIndex = 0;
@@ -14,6 +14,7 @@ export default class Text {
   }
 
   public keyDownHandler(key: string): void {
+    if (this.textEnd()) return;
     if (key === "Enter") {
       if (this.wordIndex < this.text[this.lineIndex].split(" ").length - 1) return;
       this.lineIndex = Math.min(this.lineIndex + 1, this.text.length - 1);
@@ -36,7 +37,7 @@ export default class Text {
       
       this.letterIndex = Math.min(this.letterIndex + 1, this.text[this.lineIndex].split(" ")[this.wordIndex].length);
     }
-    this.updateCursor();
+    this.updateCursor();  
   }
 
   private getCurrentLetter(): string {
@@ -76,6 +77,9 @@ export default class Text {
       const translateY = this.lineIndex * 24 + this.lineIndex * 8;
       cursor.style.transform = `translate(${translateX}px, ${translateY}px)`;
     }
+  }
+  public textEnd(): boolean {
+    return this.lineIndex === this.text.length - 1 && this.wordIndex === this.text[this.lineIndex].split(" ").length - 1 && this.letterIndex === this.text[this.lineIndex].split(" ")[this.wordIndex].length;
   }
 
   private getDistanceFromLine(): number {
