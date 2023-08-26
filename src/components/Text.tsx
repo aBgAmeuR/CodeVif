@@ -20,6 +20,23 @@ export default class Text {
       this.lineIndex = Math.min(this.lineIndex + 1, this.text.length - 1);
       this.wordIndex = 0;
       this.letterIndex = 0;
+    } else if (key === "Backspace") {
+      
+      if (this.letterIndex > 0) {
+        this.letterIndex = Math.max(this.letterIndex - 1, 0);
+      } else if (this.wordIndex > 0) {
+        this.wordIndex = Math.max(this.wordIndex - 1, 0);
+        this.letterIndex = this.text[this.lineIndex].split(" ")[this.wordIndex].length - 1;
+      } else if (this.lineIndex > 0) {
+        this.lineIndex = Math.max(this.lineIndex - 1, 0);
+        this.wordIndex = this.text[this.lineIndex].split(" ").length - 1;
+        this.letterIndex = this.text[this.lineIndex].split(" ")[this.wordIndex].length - 1;
+      }
+      const activeLetter = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1}) .letter:nth-child(${this.letterIndex + 1})`);
+      if (activeLetter) {
+        activeLetter.classList.remove("correct");
+        activeLetter.classList.remove("incorrect");
+      }
     } else if (key === " ") {
       this.wordIndex = Math.min(this.wordIndex + 1, this.text[this.lineIndex].split(" ").length - 1);
       this.letterIndex = 0;
