@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="flex text-primary gap-4">
+    <footer className="flex text-primary gap-4 select-none">
       <a
         href="https://github.com/aBgAmeuR/CodeVif"
         target="_blank"
