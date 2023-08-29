@@ -11,11 +11,13 @@ export default function LanguageModal({
   setLanguage,
   onClose,
 }: Props) {
+
+  const uniqueLanguages = Array.from(new Set(languages.map(item => item.language)));
   return (
     <div className="absolute w-screen h-screen flex items-center justify-center inset-0 addBgFiltre py-20" onClick={() => onClose()}>
     <div id="popup" className="flex flex-col max-w-[400px] w-full h-fit rounded-lg overflow-hidden bg-background z-10 overflow-y-auto max-h-full">
       {/* <button onClick={onClose}>Fermer</button> */}
-      {languages.map((lang) => (
+      {uniqueLanguages.map((lang) => (
         <div
           key={lang}
           className={`flex flex-row items-center cursor-pointer text-primary py-2 px-6 hover:bg-tertiary hover:text-background`}

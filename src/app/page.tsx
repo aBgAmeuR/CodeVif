@@ -5,16 +5,18 @@ import Footer from "./Footer";
 import Text from "@/components/Text";
 import Timer from "@/utils/Timer";
 import LanguageModal from "@/components/LanguageModal";
+import Data from "@/utils/Data";
 
-const Data =
+const Datas =
   "exports.DeleteUser = async (req, res, next) => {\n\ttry {\n\t\tconst username = req.user.username;\n\t\tif (!username) {\n\t\t\treturn next({ status: 400, message: 'Missing input'});\n\t\t}\n\t\ttry {\n\t\t\tconst user = await User.DeleteUser(username);\n\t\t\tres.status(200).send({ error: false, message: 'User deleted' });\n\t\t} catch (error) {\n\t\t\treturn next({ status: 404, message: 'User not found' });\n\t\t}\n\t} catch (error) {\n\t\tnext({ status: 500, message: 'Internal Server Error' });\n\t}\n}";
 
 export default function Home() {
+  const [data, setData] = useState(new Data());
   const [timer, setTimer] = useState(new Timer());
-  const [text, setText] = useState(new Text(Data));
+  const [text, setText] = useState(new Text(Datas));
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [language, setLanguage] = useState("Javascript");
+  const [language, setLanguage] = useState("JavaScript");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
