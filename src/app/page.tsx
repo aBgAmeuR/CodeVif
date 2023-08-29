@@ -20,6 +20,10 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    setText(new Text(data.getText()));
+  }, [data]);
+
+  useEffect(() => {
     if (text.textEnd()) return;
     const handleKeyDown = (e: { key: string }): void => {
       if (["Shift", "Control", "Alt", "AltGraph", "Tab"].includes(e.key)) return;
