@@ -6,6 +6,7 @@ import Text from "@/components/Text";
 import Timer from "@/utils/Timer";
 import LanguageModal from "@/components/LanguageModal";
 import Data from "@/utils/Data";
+import { transform } from "typescript";
 
 const Datas =
   "exports.DeleteUser = async (req, res, next) => {\n\ttry {\n\t\tconst username = req.user.username;\n\t\tif (!username) {\n\t\t\treturn next({ status: 400, message: 'Missing input'});\n\t\t}\n\t\ttry {\n\t\t\tconst user = await User.DeleteUser(username);\n\t\t\tres.status(200).send({ error: false, message: 'User deleted' });\n\t\t} catch (error) {\n\t\t\treturn next({ status: 404, message: 'User not found' });\n\t\t}\n\t} catch (error) {\n\t\tnext({ status: 500, message: 'Internal Server Error' });\n\t}\n}";
@@ -20,8 +21,9 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    data.setLanguage(language);
     setText(new Text(data.getText()));
-  }, [data]);
+  }, [data, language]);
 
   useEffect(() => {
     if (text.textEnd()) return;
@@ -54,6 +56,16 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [timer.minutes, timer.seconds]);
 
+  const changeText = () => {
+    data.newText();
+    setText(new Text(data.getText()));
+  }
+  const restartText = () => {
+    text.restart();
+    timer.stop();
+    timer.reset();
+  }
+
   return (
     <>
       <Header />
@@ -77,6 +89,14 @@ export default function Home() {
           style={{ whiteSpace: "pre" }}
         >
           {text.Render()}
+        </div>
+        <div className="flex flex-row gap-6 mx-auto justify-center items-center"  style={{ transform: "scale(1.25)" }}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer" onClick={changeText}>
+            <path d="M12.4062 8.53125L6.34375 14.625C6.03125 14.9062 5.5625 14.9062 5.28125 14.625L4.5625 13.9062C4.28125 13.625 4.28125 13.1562 4.5625 12.8438L9.375 8L4.5625 3.1875C4.28125 2.875 4.28125 2.40625 4.5625 2.125L5.28125 1.40625C5.5625 1.125 6.03125 1.125 6.34375 1.40625L12.4062 7.5C12.6875 7.78125 12.6875 8.25 12.4062 8.53125Z" fill="#444444"/>
+          </svg>
+          <svg width="16" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer" onClick={restartText}>
+            <path d="M12.0625 4.1875C11.0938 3.28125 9.8125 2.75 8.46875 2.75C6.0625 2.78125 3.96875 4.4375 3.40625 6.71875C3.34375 6.90625 3.1875 7 3.03125 7H1.25C1 7 0.8125 6.8125 0.875 6.5625C1.53125 2.96875 4.6875 0.25 8.5 0.25C10.5625 0.25 12.4375 1.09375 13.8438 2.40625L14.9688 1.28125C15.4375 0.8125 16.25 1.15625 16.25 1.8125V6C16.25 6.4375 15.9062 6.75 15.5 6.75H11.2812C10.625 6.75 10.2812 5.96875 10.75 5.5L12.0625 4.1875ZM1.5 9.25H5.6875C6.34375 9.25 6.6875 10.0625 6.21875 10.5312L4.90625 11.8438C5.875 12.75 7.15625 13.2812 8.5 13.2812C10.9062 13.25 13 11.5938 13.5625 9.3125C13.625 9.125 13.7812 9.03125 13.9375 9.03125H15.7188C15.9688 9.03125 16.1562 9.21875 16.0938 9.46875C15.4375 13.0625 12.2812 15.75 8.5 15.75C6.40625 15.75 4.53125 14.9375 3.125 13.625L2 14.75C1.53125 15.2188 0.75 14.875 0.75 14.2188V10C0.75 9.59375 1.0625 9.25 1.5 9.25Z" fill="#444444"/>
+          </svg>
         </div>
       </main>
       <Footer />

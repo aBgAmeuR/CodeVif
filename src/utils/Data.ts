@@ -23,6 +23,16 @@ export default class Data {
 
   public newText(): void {
     const languagesAfterFilter: Languages[] = languages.filter((language: Languages) => language.language === this.language);
+    if (this.text === "") {
+      const currentMinute = new Date().getMinutes();
+      const id = Math.round((languagesAfterFilter.length * currentMinute) / 60);
+      const newTextObject = languagesAfterFilter.find((language: Languages) => language.id === id);
+      if (newTextObject) {
+        this.textDone.push(newTextObject.id);
+        this.text = newTextObject.text;
+      }
+      return;
+    }
     
     let foundNewText = false;
     let newTextObject: Languages | undefined;

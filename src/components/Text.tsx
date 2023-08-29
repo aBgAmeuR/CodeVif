@@ -117,6 +117,23 @@ export default class Text {
     this.text = text.split("\n");
   }
 
+  public restart(): void {
+    this.lineIndex = 0;
+    this.wordIndex = 0;
+    this.letterIndex = 0;
+    this.updateCursor();
+    const correctLetters = document.querySelectorAll(".correct");
+    correctLetters.forEach((letter) => {
+      letter.classList.remove("correct");
+    }
+    );
+    const incorrectLetters = document.querySelectorAll(".incorrect");
+    incorrectLetters.forEach((letter) => {
+      letter.classList.remove("incorrect");
+    }
+    );
+  }
+
   Render(): ReactNode {
     const re = new RegExp("\t", "g");
 
