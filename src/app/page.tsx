@@ -6,7 +6,6 @@ import Text from "@/components/Text";
 import Timer from "@/utils/Timer";
 import LanguageModal from "@/components/LanguageModal";
 import Data from "@/utils/Data";
-import { transform } from "typescript";
 
 const Datas =
   "exports.DeleteUser = async (req, res, next) => {\n\ttry {\n\t\tconst username = req.user.username;\n\t\tif (!username) {\n\t\t\treturn next({ status: 400, message: 'Missing input'});\n\t\t}\n\t\ttry {\n\t\t\tconst user = await User.DeleteUser(username);\n\t\t\tres.status(200).send({ error: false, message: 'User deleted' });\n\t\t} catch (error) {\n\t\t\treturn next({ status: 404, message: 'User not found' });\n\t\t}\n\t} catch (error) {\n\t\tnext({ status: 500, message: 'Internal Server Error' });\n\t}\n}";
@@ -21,9 +20,8 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    data.setLanguage(language);
     setText(new Text(data.getText()));
-  }, [data, language]);
+  }, [data]);
 
   useEffect(() => {
     if (text.textEnd()) return;
@@ -90,7 +88,7 @@ export default function Home() {
         >
           {text.Render()}
         </div>
-        <div className="flex flex-row gap-6 mx-auto justify-center items-center"  style={{ transform: "scale(1.25)" }}>
+        <div className="flex flex-row gap-6 mx-auto justify-center items-center mt-6" style={{ transform: "scale(1.25)" }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer" onClick={changeText}>
             <path d="M12.4062 8.53125L6.34375 14.625C6.03125 14.9062 5.5625 14.9062 5.28125 14.625L4.5625 13.9062C4.28125 13.625 4.28125 13.1562 4.5625 12.8438L9.375 8L4.5625 3.1875C4.28125 2.875 4.28125 2.40625 4.5625 2.125L5.28125 1.40625C5.5625 1.125 6.03125 1.125 6.34375 1.40625L12.4062 7.5C12.6875 7.78125 12.6875 8.25 12.4062 8.53125Z" fill="#444444"/>
           </svg>
@@ -104,7 +102,9 @@ export default function Home() {
         <LanguageModal
           language={language}
           setLanguage={setLanguage}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+            setIsModalOpen(false);
+          }}
         />
       )}
     </>
