@@ -112,7 +112,11 @@ export default class Text {
     }
     return 0;
   }
-  
+
+  public setText(text: string): void {
+    this.text = text.split("\n");
+  }
+
   Render(): ReactNode {
     const re = new RegExp("\t", "g");
 
