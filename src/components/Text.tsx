@@ -38,6 +38,7 @@ export default class Text {
         activeLetter.classList.remove("incorrect");
       }
     } else if (key === " ") {
+      this.checkAndAddErrorClass();
       this.wordIndex = Math.min(this.wordIndex + 1, this.text[this.lineIndex].split(" ").length - 1);
       this.letterIndex = 0;
     } else {
@@ -72,6 +73,17 @@ export default class Text {
     const activeLetter = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1}) .letter:nth-child(${this.letterIndex + 1})`);
     if (activeLetter) {
       activeLetter.classList.add("incorrect");
+    }
+  }
+
+  private checkAndAddErrorClass(): void {
+    const activeWord = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1})`);
+    if (activeWord) {
+      const incorrectLetters = activeWord.querySelectorAll(".incorrect");
+      const correctLetters = activeWord.querySelectorAll(".correct");
+      if (incorrectLetters.length > 0 || (correctLetters.length === 0 && incorrectLetters.length === 0)) {
+        activeWord.classList.add("error");
+      }
     }
   }
   
@@ -125,13 +137,15 @@ export default class Text {
     const correctLetters = document.querySelectorAll(".correct");
     correctLetters.forEach((letter) => {
       letter.classList.remove("correct");
-    }
-    );
+    });
     const incorrectLetters = document.querySelectorAll(".incorrect");
     incorrectLetters.forEach((letter) => {
       letter.classList.remove("incorrect");
-    }
-    );
+    });
+    const incorrectWords = document.querySelectorAll(".error");
+    incorrectWords.forEach((word) => {
+      word.classList.remove("error");
+    });
   }
 
   Render(): ReactNode {

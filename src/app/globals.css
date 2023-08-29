@@ -30,6 +30,13 @@ footer a:hover svg {
 #text .letter.extra {
   color: #4d2113;
 }
+#text .word.error  { 
+  text-decoration: underline;
+  text-decoration-color: #af5f5f;
+  text-decoration-thickness: 2px;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 4px;
+}
 #cursor {
   position: absolute;
   z-index: 2;
