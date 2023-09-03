@@ -54,15 +54,15 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [timer.minutes, timer.seconds]);
 
-  const changeText = () => {
-    text.restart();
-    data.newText();
-    setText(new Text(data.getText()));
-  }
   const restartText = () => {
     text.restart();
     timer.stop();
     timer.reset();
+  }
+  const changeText = () => {
+    restartText();
+    data.newText();
+    setText(new Text(data.getText()));
   }
 
   return (
