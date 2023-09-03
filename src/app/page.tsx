@@ -55,6 +55,7 @@ export default function Home() {
   }, [timer.minutes, timer.seconds]);
 
   const changeText = () => {
+    text.restart();
     data.newText();
     setText(new Text(data.getText()));
   }
