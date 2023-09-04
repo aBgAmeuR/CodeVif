@@ -1,26 +1,106 @@
 [
   {
     "id": 1,
-    "text": "exports.DeleteUser = async (req, res, next) => {\n\ttry {\n\t\tconst username = req.user.username;\n\t\tif (!username) {\n\t\t\treturn next({ status: 400, message: 'Missing input'});\n\t\t}\n\t\ttry {\n\t\t\tconst user = await User.DeleteUser(username);\n\t\t\tres.status(200).send({ error: false, message: 'User deleted' });\n\t\t} catch (error) {\n\t\t\treturn next({ status: 404, message: 'User not found' });\n\t\t}\n\t} catch (error) {\n\t\tnext({ status: 500, message: 'Internal Server Error' });\n\t}\n}",
+    "text": "var number = function (busStops) {\n\tvar totalPeople = 0;\n\tfor (var i = 0; i < busStops.length; i++)\n\t\ttotalPeople += busStops[i][0] - busStops[i][1];\n\treturn totalPeople;\n}",
     "language": "JavaScript"
   },
   {
     "id": 2,
-    "text": "exports.GetUser = async (req, res, next) => {\n\ttry {\n\t\tconst username = req.user.username;\n\t\tif (!username) {\n\t\t\treturn next({ status: 400, message: 'Missing input'});\n\t\t}\n\t\ttry {\n\t\t\tconst user = await User.GetUser(username);\n\t\t\tres.status(200).send({ error: false, message: 'User found', user });\n\t\t} catch (error) {\n\t\t\treturn next({ status: 404, message: 'User not found' });\n\t\t}\n\t} catch (error) {\n\t\tnext({ status: 500, message: 'Internal Server Error' });\n\t}\n}",
+    "text": "removeDuplicates = (nums) => {\n\tvar out=[]\n\tfor (v of nums)\n\t\tif (!out.includes(v)) out.push(v)\n\treturn out.sort()\n}",
     "language": "JavaScript"
   },
   {
     "id": 3,
-    "text": "exports.UpdateUser = async (req, res, next) => {\n\ttry {\n\t\tconst username = req.user.username;\n\t\tconst { password, email } = req.body;\n\t\tif (!username || !password || !email) {\n\t\t\treturn next({ status: 400, message: 'Missing input'});\n\t\t}\n\t\ttry {\n\t\t\tconst user = await User.UpdateUser(username, password, email);\n\t\t\tres.status(200).send({ error: false, message: 'User updated', user });\n\t\t} catch (error) {\n\t\t\treturn next({ status: 404, message: 'User not found' });\n\t\t}\n\t} catch (error) {\n\t\tnext({ status: 500, message: 'Internal Server Error' });\n\t}\n}",
+    "text": "const calculateTip = (amount, rating) => {\n\trating = rating.toLowerCase();\n\treturn rating in TIPS ? Math.ceil(TIPS[rating] * amount) : 'Rating not recognised';\n};",
     "language": "JavaScript"
   },
   {
     "id": 4,
-    "text": "exports.CreateUser = async (req, res, next) => {\n\ttry {\n\t\tconst { username, password, email } = req.body;\n\t\tif (!username || !password || !email) {\n\t\t\treturn next({ status: 400, message: 'Missing input'});\n\t\t}\n\t\ttry {\n\t\t\tconst user = await User.CreateUser(username, password, email);\n\t\t\tres.status",
+    "text": "let calculateTip = (a,r) => {\n\tconst i = ['terrible', 'poor', 'good', 'great', 'excellent'].indexOf(r.toLowerCase());\n\treturn i === -1 ? 'Rating not recognised' : Math.ceil(i*a*.05);\n}",
     "language": "JavaScript"
   },
   {
     "id": 5,
+    "text": "function calculateTip(amount, rating) {\n\tconsole.log(amount,rating)\n\tvar base = { terrible: 0, poor: 5, good: 10, great: 15, excellent: 20 }\n\tvar total = Math.ceil(base[rating.toLowerCase()]*amount/100)\n\treturn isNaN(total)? 'Rating not recognised' : total\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 6,
+    "text": "countArara = (n) => {\n\tif (n==1) return 'anane';\n\tif (n==2) return 'adak';\n\treturn 'adak' + ' ' + countArara(n-2);\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 7,
+    "text": "String.prototype.toJadenCase = function () {\n\tfunction capitalizeFirstLetter(string) {\n\t\treturn string.charAt(0).toUpperCase() + string.slice(1);\n\t}\n\treturn this.split(' ').map(capitalizeFirstLetter).join(' ');\n};",
+    "language": "JavaScript"
+  },
+  {
+    "id": 8,
+    "text": "checkExpiryValid = (date) => {\n\tvar [m,y]=date.split(/[^\\d]/).filter(n=>n);\n\ty=+y+((y<100)?2000:0);\n\tvar now=new Date();\n\treturn (m>now.getMonth() && y==now.getFullYear()) || (y>now.getFullYear());\n};",
+    "language": "JavaScript"
+  },
+  {
+    "id": 9,
+    "text": "var pairs = {'A':'T','T':'A','C':'G','G':'C'};\nfunction DNAStrand(dna){\n\treturn dna.split('').map((v)=> pairs[v]).join('');\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 10,
+    "text": "function colourAssociation(array) {\n\treturn array.map(function(i) {\n\t\tvar v = {};\n\t\tv[i[0]] = i[1]\n\t\treturn v;\n\t});\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 11,
+    "text": "function killcount(counselors, jason){\n\tvar arr = []\n\tfor (var i = 0; i < counselors.length; i++){\n\t\tif (counselors[i][1] < jason) {\n\t\t\tarr.push(counselors[i][0])\n\t\t}\n\t}\n\treturn arr;\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 12,
+    "text": "function encode(str) {\n\tvar code = 'GADERYPOLUKIgaderypoluki'\n\tvar s = [...str].map(c => {\n\t\tvar r = code.indexOf(c)\n\t\treturn (r >= 0) ? code[2 * (r / 2 | 0) + (1 - r % 2)] : c\n\t})\n\treturn s.join('');\n}\nfunction decode(str) {\n\treturn encode(str);\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 13,
+    "text": "function battle(x, y) {\n\tconst score = (str) => str.split('').map(v=> v==v.toUpperCase() ? v.charCodeAt()-64 :\n\t(v.charCodeAt()-96)/2 ).reduce( (a,b) => a+b)\n\treturn score(x)>score(y) ? x : (score(x)<score(y) ? y : 'Tie!') ;\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 14,
+    "text": "function countCorrectCharacters(correctWord, guess){\n\tif(correctWord.length-guess.length) throw new Error('Mauvaise longueur !');\n\treturn [...correctWord].filter((c,i)=>c===guess[i]).length;\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 15,
+    "text": "function diff(a, b){\n\tlet set1 = new Set(a);\n\tlet set2 = new Set(b);\n\tlet diff1 = a.filter(item => !set2.has(item));\n\tlet diff2 = b.filter(item => !set1.has(item));\n\treturn Array.from(new Set(diff1.concat(diff2))).sort();\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 16,
+    "text": "distributionOf = (golds) =>{\n\tvar [A,me,s]=[0,true,golds.reduce((a,v)=>a+v)];\n\twhile(golds.length>0) {\n\t\tvar g=(golds[0]>=golds.slice(-1)) ? golds.shift() : golds.pop();\n\t\tif (me) A+=g;;\n\t\tme=!me;\n\t}\n\treturn [A,s-A];\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 17,
+    "text": "function evilCodeMedal(userTime, gold, silver, bronze) {\n\tif(userTime < gold) return 'Gold';\n\tif(userTime < silver) return 'Silver';\n\tif(userTime < bronze) return 'Bronze';\n\treturn 'None';\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 18,
+    "text": "function narcissistic( value ) {\n\tvar str = value + '';\n\tvar sum = 0;\n\tfor (var i = 0, len = str.length; i < len; i++){\n\t\tsum += Math.pow(+str.substr(i, 1), len);\n\t}\n\treturn (sum === value);\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 19,
+    "text": "function lineIntersections(start, end) {\n\tfor (var c=0,i=0;i<start.length-1;i++)\n\t\tfor (var j=i+1;j<start.length;j++)\n\t\t\tif (start[i]<=end[j] && end[i]>=start[j]) c++;\n\treturn c\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 20,
+    "text": "cycle = function(sequence){\n\tfor(i=0; i<sequence.length; ++i)\n\t\tfor(j=i+1; j<sequence.length; ++j){\n\t\t\tif(sequence[i] === sequence[j]) return [i, j-i];\n\t\t}\n\treturn []\n}",
+    "language": "JavaScript"
+  },
+  {
+    "id": 21,
     "text": "Room room = mappedRoom(node);\nfor (Map.Entry<Direction, Room> entry : lastRoom.getNextRooms().entrySet()) {\n\tif (entry.getValue().equals(room)) {\n\t\tsoluce.addDirection(entry.getKey());\n\t\tbreak;\n\t}\n}",
     "language": "Java"
   }
