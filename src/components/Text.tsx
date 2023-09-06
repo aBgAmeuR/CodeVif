@@ -33,9 +33,14 @@ export default class Text {
         this.letterIndex = this.text[this.lineIndex].split(" ")[this.wordIndex].length - 1;
       }
       const activeLetter = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1}) .letter:nth-child(${this.letterIndex + 1})`);
+      const activeWord = document.querySelector(`line:nth-child(${this.lineIndex + 1}) .word:nth-child(${this.wordIndex + 1})`);
+    
       if (activeLetter) {
         activeLetter.classList.remove("correct");
         activeLetter.classList.remove("incorrect");
+      }
+      if (activeWord) {
+        activeWord.classList.remove("error");
       }
     } else if (key === " ") {
       this.checkAndAddErrorClass();
