@@ -1,15 +1,15 @@
-import languages from "@/static/languages/Index.json";
+import languagesJson from "@/static/languages/Index.json";
 import { Languages } from "@/types";
 
 export default class Data {
   private language: string;
-  private textDone: number[];
   private text: string;
+  private languages: Languages[];
 
-  constructor() {
-    this.language = "JavaScript";
-    this.textDone = [];
+  constructor(language: string) {
+    this.language = language;
     this.text = "";
+    this.languages = languagesJson;
     this.newText();
   }
 
@@ -21,36 +21,17 @@ export default class Data {
     this.language = language;
   }
 
-  public newText(): void {
-    const languagesAfterFilter: Languages[] = languages.filter((language: Languages) => language.language === this.language);
-    if (this.text === "") {
-      const currentMinute = new Date().getMinutes();
-      let id = Math.round((languagesAfterFilter.length * currentMinute) / 60);
-      if (id === 0) id++;
-      const newTextObject = languagesAfterFilter.find((language: Languages) => language.id === id);
-      if (newTextObject) {
-        this.textDone.push(newTextObject.id);
-        this.text = newTextObject.text;
-      }
-      return;
-    }
+  public newText(): void {    
+    const languagesAfterFilter: Languages[] = this.languages.filter((language: Languages) => language.language === this.language);
     
-    let foundNewText = false;
-    let newTextObject: Languages | undefined;
+    const randomIndex: number = Math.floor(Math.random() * languagesAfterFilter.length);
+    const newTextObject: Languages | undefined = languagesAfterFilter.find((language: Languages, index: number) => index === randomIndex);
+    this.languages = this.languages.filter((language: Languages) => language.id !== newTextObject?.id);
 
-    while (!foundNewText && languagesAfterFilter.length > 0) {
-      const randomIndex = Math.floor(Math.random() * languagesAfterFilter.length);
-      newTextObject = languagesAfterFilter.splice(randomIndex, 1)[0];
-
-      if (newTextObject && !this.textDone.includes(newTextObject.id)) {
-        this.textDone.push(newTextObject.id);
-        this.text = newTextObject.text;
-        foundNewText = true;
-      }
-    }
-
-    if (!foundNewText) {
+    if (!newTextObject) {
       this.text = "No new text available.";
+    } else {
+      this.text = newTextObject.text;
     }
   }
 
