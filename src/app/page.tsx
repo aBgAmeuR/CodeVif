@@ -8,7 +8,7 @@ import LanguageModal from "@/components/LanguageModal";
 import Data from "@/utils/Data";
 
 export default function Home() {
-  const [language, setLanguage] = useState("Java");
+  const [language, setLanguage] = useState("JavaScript");
   const [data, setData] = useState(new Data(language));
   const [timer, setTimer] = useState(new Timer());
   const [text, setText] = useState(new Text(""));
